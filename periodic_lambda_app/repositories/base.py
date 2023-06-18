@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from uuid import UUID
 
-from periodic_lambda_app.schemas import TodoCreate, Todo
+from periodic_lambda_app.schemas import Todo, TodoCreate
 
 
 class TodoRepository(ABC):

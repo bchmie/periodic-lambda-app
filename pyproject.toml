@@ -11,10 +11,13 @@ license = "MIT"
 version = "0.0.1"
 dependencies = [
     "fastapi[all]",
+    "mangum"
 ]
 
 [project.optional-dependencies]
 dev = [
+    "aws-cdk-lib==2.84.0",
+    "constructs>=10.0.0,<11.0.0",
     "black",
     "isort",
 ]

@@ -3,6 +3,7 @@ from operator import attrgetter
 from uuid import UUID
 
 from fastapi import FastAPI, HTTPException
+from mangum import Mangum
 from starlette import status
 from starlette.responses import FileResponse
 
@@ -42,3 +43,6 @@ async def delete_todo(id: UUID) -> None:
     except RuntimeError:
         raise HTTPException(status_code=404, detail="Todo not found")
     return
+
+
+handler = Mangum(app, lifespan="off")
