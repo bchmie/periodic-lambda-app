@@ -1,0 +1,19 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
+  dynamodb:
+    image: amazon/dynamodb-local
+    expose:
+      - 8000
+    ports:
+      - 8001:8000
+  dynamodb-admin:
+    image: aaronshaf/dynamodb-admin
+    environment:
+      - DYNAMO_ENDPOINT=http://dynamodb:8000
+    ports:
+      - 8002:8001

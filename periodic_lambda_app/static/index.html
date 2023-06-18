@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Periodic Lambda App</title>
+</head>
+<body>
+    <script type="module">
+        import { createApp } from 'https://unpkg.com/petite-vue?module'
+
+        function Todo(props) {
+            return {
+                text: "",
+                todos: [],
+                async createTodo() {
+                    const newTodo = { "text": this.text }
+                    const response = await fetch("/todo/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(newTodo)
+                    })
+                    this.text = "";
+                    this.fetchTodos();
+                },
+                async fetchTodos() {
+                    const response = await fetch("/todo/", {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    })
+                    this.todos = await response.json();
+
+                },
+                async completeTodo(todo) {
+                    const response = await fetch(`/todo/${todo.id}/`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({...todo, "status": "completed"})
+                    })
+                    this.fetchTodos();
+                },
+                async deleteTodo(id) {
+                    const response = await fetch(`/todo/${id}/`, {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    })
+                    this.fetchTodos();
+                },
+                mounted() {
+                    this.fetchTodos();
+                }
+            }
+        }
+
+        createApp({
+            Todo
+        }).mount()
+    </script>
+
+    <div id="todo" v-scope="Todo({})" @vue:mounted="mounted">
+        <div id="todocreate">
+            <label for="todoinput">Create new todo</label>
+            <input id="todoinput" v-model="text" />
+            <button @click="createTodo">Add todo</button>
+        </div>
+
+        <div id="todolist">
+            <table>
+                <tr>
+                    <th>Todo</th>
+                    <th>Created</th>
+                    <th>Status</th>
+                    <th>Inactive Since</th>
+                    <th>Complete</th>
+                    <th>Delete</th>
+                </tr>
+                <tr v-for="todo in todos">
+                    <td :class="{inactive: todo.status !== 'active'">{{ todo.text }}</td>
+                    <td>{{ todo.created }}</td>
+                    <td>{{ todo.status }}</td>
+                    <td>{{ todo.inactive_since }}</td>
+                    <td><button @click="completeTodo(todo)" :disabled="todo.status !== 'active'">Complete</button></td>
+                    <td><button @click="deleteTodo(todo.id)">Delete</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <style>
+        #todo {
+            margin: 100px;
+            display: flex;
+            flex-direction: row;
+        }
+
+        #todocreate {
+            flex-grow: 1;
+            background-color: aquamarine;
+        }
+
+        #todolist {
+            flex-grow: 1;
+            background-color: cornsilk;
+        }
+
+        #todolist td.inactive {
+            text-decoration: line-through;
+        }
+    </style>
+</body>
+</html>
