@@ -3,8 +3,7 @@ import os
 
 import aws_cdk as cdk
 
-from cdk.stacks.api_stack import ApiStack
-
+from cdk_infra.api_stack import ApiStack
 
 app = cdk.App()
 ApiStack(app, "CdkStack",

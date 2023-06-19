@@ -13,7 +13,7 @@
                 todos: [],
                 async createTodo() {
                     const newTodo = { "text": this.text }
-                    const response = await fetch("/todo/", {
+                    const response = await fetch("/todo", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -24,7 +24,7 @@
                     this.fetchTodos();
                 },
                 async fetchTodos() {
-                    const response = await fetch("/todo/", {
+                    const response = await fetch("/todo", {
                         method: "GET",
                         headers: {
                             "Content-Type": "application/json"
@@ -34,7 +34,7 @@
 
                 },
                 async completeTodo(todo) {
-                    const response = await fetch(`/todo/${todo.id}/`, {
+                    const response = await fetch(`/todo/${todo.id}`, {
                         method: "PUT",
                         headers: {
                             "Content-Type": "application/json"
@@ -44,7 +44,7 @@
                     this.fetchTodos();
                 },
                 async deleteTodo(id) {
-                    const response = await fetch(`/todo/${id}/`, {
+                    const response = await fetch(`/todo/${id}`, {
                         method: "DELETE",
                         headers: {
                             "Content-Type": "application/json"
