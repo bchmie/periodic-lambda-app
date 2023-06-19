@@ -38,3 +38,15 @@ To add a dependency to a project, follow these steps:
   - for dependencies: `pip-compile -o requirements.txt pyproject.toml`
   - for dev dependencies: `pip-compile --extra=dev --output-file=dev-requirements.txt pyproject.toml`
 - finally, sync your venv: `pip-sync requirements.txt dev-requirements.txt` and rebuild the containers
+
+
+## Deployment
+
+Due to https://github.com/aws/aws-cdk/issues/25449 - cdk.out contents needs to be saved outside the app.
+
+To initialize deployment env, follow [this readme](cdk_infra/README.md).
+
+Deploy the app:
+```
+cdk -o ~/Development/cdk_out_temp/cdk.out deploy
+```
