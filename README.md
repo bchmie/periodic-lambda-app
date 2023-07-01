@@ -29,6 +29,8 @@ Just start the containers:
 docker compose up
 ```
 
+After that, you can visit http://127.0.0.1:8000/ and see the UI.
+
 ## Adding dependencies
 
 To add a dependency to a project, follow these steps:
