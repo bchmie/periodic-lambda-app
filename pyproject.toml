@@ -11,7 +11,8 @@ license = "MIT"
 version = "0.0.1"
 dependencies = [
     "fastapi[all]",
-    "mangum"
+    "mangum",
+    "boto3"
 ]
 
 [project.optional-dependencies]

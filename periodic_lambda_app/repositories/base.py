@@ -1,26 +1,22 @@
 from abc import ABC, abstractmethod
 from uuid import UUID
 
-from periodic_lambda_app.schemas import Todo, TodoCreate
+from periodic_lambda_app.schemas import Todo
 
 
 class TodoRepository(ABC):
-    @classmethod
     @abstractmethod
-    def create(cls, todo: TodoCreate) -> Todo:
+    def create(self, todo: Todo) -> None:
         ...
 
-    @classmethod
     @abstractmethod
-    def list(cls) -> list[Todo]:
+    def list(self) -> list[Todo]:
         ...
 
-    @classmethod
     @abstractmethod
-    def save(cls, to_change: Todo) -> Todo:
+    def save(self, to_change: Todo) -> Todo:
         ...
 
-    @classmethod
     @abstractmethod
-    def delete(cls, todo_id: UUID) -> None:
+    def delete(self, todo_id: UUID) -> None:
         ...

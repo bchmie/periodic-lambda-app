@@ -1,3 +1,9 @@
+x-aws-env: &aws-env
+  AWS_ACCESS_KEY_ID: "DUMMYIDEXAMPLE"
+  AWS_SECRET_ACCESS_KEY: "DUMMYEXAMPLEKEY"
+  AWS_REGION: "eu-central-1"
+
+
 services:
   web:
     build: .
@@ -5,15 +11,21 @@ services:
       - "8000:8000"
     volumes:
       - .:/code
+    environment:
+      <<: *aws-env
+      ENVIRONMENT: "prod"
   dynamodb:
     image: amazon/dynamodb-local
     expose:
       - 8000
     ports:
       - 8001:8000
+    environment:
+      <<: *aws-env
   dynamodb-admin:
     image: aaronshaf/dynamodb-admin
     environment:
-      - DYNAMO_ENDPOINT=http://dynamodb:8000
+      <<: *aws-env
+      DYNAMO_ENDPOINT: "http://dynamodb:8000"
     ports:
       - 8002:8001
